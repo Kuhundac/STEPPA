@@ -82,5 +82,24 @@ class Program
         {
             Console.WriteLine(reader["Name"] + " - " + reader["Color"] + " - " + reader["Price"] + " - " + reader["StockQuantity"]);
         }
+
+        var updateCmd = connection.CreateCommand();
+        updateCmd.CommandText = "UPDATE Products SET StockQuantity = 5 WHERE Name = 'Ankle Sock';";
+        updateCmd.ExecuteNonQuery();
+
+        var deleteCmd = connection.CreateCommand();
+        deleteCmd.CommandText = "DELETE FROM Products WHERE Name = 'Colorful Sock';";
+        deleteCmd.ExecuteNonQuery();
+
+        Console.WriteLine("After update and delete:");
+
+        var selectCmd2 = connection.CreateCommand();
+        selectCmd2.CommandText = "SELECT * FROM Products;";
+
+        using var reader2 = selectCmd2.ExecuteReader();
+        while (reader2.Read())
+        {
+            Console.WriteLine(reader2["Name"] + " - " + reader2["Color"] + " - " + reader2["Price"] + " - " + reader2["StockQuantity"]);
+        }
     }
 }
